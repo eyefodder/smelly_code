@@ -1,4 +1,7 @@
 SmellyCode::Application.routes.draw do
+  root 'main_pages#home'
+
+  post 'make_list', to: 'main_pages#make_list'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

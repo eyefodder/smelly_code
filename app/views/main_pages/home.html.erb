@@ -1,0 +1,21 @@
+<h1><%= @title %></h1>
+<div class="row">
+<%= @tmp %>
+</div>
+<div class="row">
+<div class="span6">
+<h2>Choose the recipes to cook</h2>
+<%= form_tag(controller: 'main_pages', action: 'make_list', method: 'post') do %>
+<%= submit_tag 'submit',  class: "btn btn-large btn-primary" %>
+	<%= render @recipes %>
+
+	
+<% end %>
+</div>
+<div class="span6">
+<h2><%= "Here is your list (#{@shopping_list.length}) items" %></h2>
+<ul>
+<%= render partial: 'shopping_list_item', collection: @shopping_list.items, as: :item %>
+</ul>
+</div>
+</div>

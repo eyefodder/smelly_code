@@ -14,7 +14,9 @@ class Recipe < ActiveRecord::Base
 	validates :name, presence: true, uniqueness: {case_sensitive: false}
 	validates :servings, presence: true, numericality: { only_integer: true }
 
-	
+	def shopping_list
+		shopping_list_for servings
+	end
 
 	def add_ingredient!(ingredient, amount)
 		begin

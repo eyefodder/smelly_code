@@ -1,0 +1,7 @@
+<fieldset class='controls-row'>
+	<%= check_box_tag "shopping_list_recipes[#{recipe.id}]" , 1, (@chosen_recipes.include? recipe) %>
+	<% if recipe.respond_to?('image_uri') %>
+		<%= image_tag(recipe.image_uri, size:"50") %>
+	<% end %>
+	<%= link_to recipe.name, '#', class:"item-name" %>
+</fieldset>
