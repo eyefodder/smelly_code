@@ -14,7 +14,7 @@ class MainPagesController < ApplicationController
   		@chosen_recipes = Recipe.find(params[:shopping_list_recipes].keys)
   		@shopping_list = ShoppingList.new([])
   		@chosen_recipes.each do |recipe|
-  			@shopping_list += recipe.shopping_list
+  			@shopping_list = @shopping_list.add_to recipe.shopping_list
   		end
   	else
   		@chosen_recipes = []

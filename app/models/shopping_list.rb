@@ -21,52 +21,24 @@ class ShoppingList
   end
 
 
-  def grouped_list
-    arr = @items.sort do |x,y|
-      x.ingredient.ingredient_location_group.name <=> y.ingredient.ingredient_location_group.name
-    end
+
+  def add_to(otherlist)
     result = []
-    last_item = arr[0]
-    if (last_item)
-      current_group = create_group last_item
-      result.push(current_group)
-      i = 1
-      while(i<arr.length) do
-        next_item = arr[i]
-        if next_item.ingredient.ingredient_location_group != last_item.ingredient.ingredient_location_group
-          current_group = create_group next_item
-          result.push(current_group)
-        else
-          current_group[:items].push(next_item)
+    @items.each do |item|
+      result << item
+    end
+    otherlist.items.each do |other_item|
+      match = false
+      @items.each do |original_item| 
+        if original_item.ingredient == other_item.ingredient
+          result_index = result.index {|item| item.ingredient == original_item.ingredient}
+          result[result_index].amount += other_item.amount
+          match = true
         end
-        last_item = next_item
-        i += 1
       end
+      result << other_item
     end
-
-    result
+    ShoppingList.new(result)
   end
-
-  def create_group ingredient_amount
-   group = {group: ingredient_amount.ingredient.ingredient_location_group, items: [ingredient_amount]}
-   group
- end
-
- def +(otherlist)
-    # puts("combining #{self.inspect} with #{otherlist.inspect}")
-    result = @items + otherlist.items
-    result.sort!
-    i = 1
-    while (i<result.length) do
-      # puts ("seeing if #{result[i].inspect} is same ingredient as #{result[i-1].inspect}, i: #{i}, #{result[i].same_ingredient_as? result[i-1]}")
-      if result[i].same_ingredient_as? result[i-1]
-       result [i-1] += result [i] 
-       result.slice!(i)
-     else
-      i += 1
-    end
-  end
-  ShoppingList.new(result)
-end
 
 end
